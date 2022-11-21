@@ -1,5 +1,4 @@
-//_________________________  Import: Model  ________________________________
-
+//<----------------------Importing : Packages---------------------->//
 const internModel = require("../Models/internModel");
 const collegeModel = require("../Models/collegeModel");
 const validator = require("../Validation/validator");
@@ -57,6 +56,5 @@ const createIntern = async (req, res) => {
 catch(err){res.status(500).send({msg:err})}
 };
 
-//_________________________  Export: Module  ________________________________
-
+//<----------------------Export: Module---------------------------->//
 module.exports = { createIntern };
