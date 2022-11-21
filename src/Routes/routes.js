@@ -5,22 +5,16 @@ const router = express.Router();
 
 //_________________________  Require: Modules  ________________________________
 
-//const {createCollege,collegeDetails} = require ("../Controllers/collegeController")
-
-//const {createIntern} = require("../Controllers/internController")
+const { createCollege, collegeDetails } = require("../Controller/collegeController.js")
+const { createIntern } = require("../Controller/createIntern")
 
 //_________________________  post api: Create  ________________________________
 
-// router.post("/functionup/colleges", createCollege)
-
-// //_________________________  post api: Create  ________________________________
-
-// router.post("/functionup/interns", createIntern)
-
+router.post("/functionup/colleges", createCollege)
+//_________________________  post api: Create  ________________________________
+router.post("/functionup/interns", createIntern)
 // //_________________________  get api: Fetch  ________________________________
-
-// router.get("/functionup/collegeDetails", collegeDetails)
+router.get("/functionup/collegeDetails", collegeDetails)
 
 //_________________________  Export: Route  ________________________________
-
-module.exports=router;
+module.exports = router;
