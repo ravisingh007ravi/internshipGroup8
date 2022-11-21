@@ -5,14 +5,14 @@ const mongoose=require('mongoose');
 //__________________________ Validations : Name  ___________________________________________
 
 const isValidName=function(name){
-    const regexName=/[a-zA-Z]{3,}/;
+    const regexName=/^[a-zA-Z]+$/;;
     return regexName.test(name)
 }
 
   //__________________________ Validations : Mobile No ___________________________________________
 
 const isValidMobileNo=function(mobile){
-    const regexMob=/[1-90]{10,10}/;
+    const regexMob=/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[6789]\d{9}$/g;
     return regexMob.test(mobile);
 }
 
@@ -47,4 +47,11 @@ const isValidPassword = function (password) {
   
   //__________________________ Export : Modules  ___________________________________________
   
-  module.exports = {isValid,isValidMobileNo,isValidEmail,isValidName,isValidPassword,isValidObjectId,};
+  module.exports = {
+    isValid,
+    isValidMobileNo,
+    isValidEmail,
+    isValidName,
+    isValidPassword,
+    isValidObjectId,
+  };

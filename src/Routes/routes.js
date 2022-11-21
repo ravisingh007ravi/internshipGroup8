@@ -5,8 +5,8 @@ const router = express.Router();
 
 //_________________________  Require: Modules  ________________________________
 
-const { createCollege, collegeDetails } = require("../Controller/collegeController.js")
-const { createIntern } = require("../Controller/createIntern")
+const { createCollege, collegeDetails } = require("../Controllers/collegeController.js")
+const { createIntern } = require("../Controllers/internController.js")
 
 //_________________________  post api: Create  ________________________________
 
