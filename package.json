@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/ravisingh007ravi/internshipGroup8#readme",
   "dependencies": {
+    "address": "^1.2.1",
     "express": "^4.18.2",
-    "mongoose": "^6.7.2"
+    "mongoose": "^6.7.2",
+    "valid-url": "^1.0.9"
   }
 }
