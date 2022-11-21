@@ -4,57 +4,37 @@ const internModel = require("../Models/internModel");
 const collegeModel = require("../Models/collegeModel");
 const validator = require("../Validation/validator");
 
-//_________________________  post api: Create  ________________________________
-
+//<-------------This API used for Create Internship---------------->//
 const createIntern = async (req, res) => {
+  try{
   const data = req.body;
   const { name, mobile, email, collegeName } = data;
 
-  if (Object.keys(data) == "") {
-   return res.status(400).send({ status: false, msg: "Please Provide Some Data" });
-  }
-  if (!validator.isValidName(name)) {
-   return res.status(400).send({ status: false, msg: "Please Provide a Name" });
-  }
+  if (Object.keys(data).length == 0) return res.status(400).send({ status: false, msg: "Please Provide Some Data" });
+  
+  if (!validator.isValidName(name)) return res.status(400).send({ status: false, msg: "Please Provide a Name" });
+  
 
-  if (!validator.isValidMobileNo(mobile)) {
-   return res
-      .status(404)
-      .send({ status: false, msg: "Please Provide a Valid Mobile No" });
-  }
+  if (!validator.isValidMobileNo(mobile)) return res.status(404).send({ status: false, msg: "Please Provide a Valid Mobile No" });
+  
 
   isMobileAlreadyUse = await internModel.findOne({ mobile });
-  if (isMobileAlreadyUse) {
-    return res.status(400).send({
-      status: false,
-      msg: "this Mobile No is already registered",
-    });
-  }
+  if (isMobileAlreadyUse) return res.status(400).send({status: false,msg: "this Mobile No is already registered",});
+  
 
-  if (!validator.isValidEmail(email)) {
-   return res
-      .status(404)
-      .send({ status: false, msg: "Please Provide a Valid Email Id" });
-  }
+  if (!validator.isValidEmail(email)) return res.status(404).send({ status: false, msg: "Please Provide a Valid Email Id" });
+  
 
-  if (!validator.isValid(collegeName)) {
-   return res
-      .status(404)
-      .send({ status: false, msg: "Please Provide a College Name" });
-  }
+  if (!validator.isValid(collegeName)) return res.status(404).send({ status: false, msg: "Please Provide a College Name" });
+  
 
-  const findcollege = await collegeModel.findOne({ name: collegeName }); // checking for the college if any with that name exists
-  if (!findcollege) {
-    return res
-      .status(400)
-      .send({ status: false, msg: "no college with this name exists" });
-  }
+  const findcollege = await collegeModel.findOne({ name: collegeName }); 
 
-  if (findcollege.isDeleted === true) {
-    return res
-      .status(400)
-      .send({ status: false, msg: "This college is no longer with us" });
-  }
+  if (!findcollege) return res.status(400).send({ status: false, msg: "no college with this name exists" });
+  
+
+  if (findcollege.isDeleted === true) return res.status(400).send({ status: false, msg: "This college is no longer with us" });
+  
 
   const collegeId = findcollege._id;
 
@@ -67,20 +47,14 @@ const createIntern = async (req, res) => {
 
   const findIntern = await internModel.findOne(internData);
 
-  if (findIntern) {
-    return res
-      .status(400)
-      .send({ status: false, msg: "student intern already exists" });
-  }
+  if (findIntern) return res.status(400).send({ status: false, msg: "student intern already exists" });
+  
 
   const createIntern = await internModel.create(internData);
-  if (createIntern) {
-    return res.status(201).send({
-      status: true,
-      msg: "you have successfully registered",
-      data: createIntern,
-    });
-  }
+  if (createIntern) return res.status(201).send({status: true,msg: "you have successfully registered",data: createIntern,});
+  
+}
+catch(err){res.status(500).send({msg:err})}
 };
 
 //_________________________  Export: Module  ________________________________

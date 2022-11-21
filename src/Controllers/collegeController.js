@@ -1,29 +1,21 @@
-//_________________________  Import: Model  ________________________________
+//<----------------------Importing : Packages---------------------->//
+const collegeModel = require("../Models/collegeModel.js");
+const internModel = require("../Models/internModel.js");
 
-const collegeModel = require("../Models/collegeModel");
-const internModel = require("../Models/internModel");
-
-const validator = require("../Validation/validator");
+const validator = require("../Validation/validator.js");
 const url = require("valid-url");
 
-//_________________________  post api: Create  ________________________________
-
+//<-------------This API used for Create Colleges----------------->//
 const createCollege = async (req, res) => {
   try {
     const data = req.body;
     const { name, fullName, logoLink } = data;
 
-    if (Object.keys(data) == 0) {
-      return res
-        .status(400)
-        .send({ status: false, msg: "Please Provide Some Data" });
-    }
+    if (Object.keys(data).length == 0) return res.status(400).send({ status: false, msg: "Please Provide Some Data" });
+    
 
-    if (!validator.isValidName(name)) {
-      return res
-        .status(404)
-        .send({ status: false, msg: "Please Provide a Valid Name" });
-    }
+    if (!validator.isValidName(name)) return res.status(404).send({ status: false, msg: "Please Provide a Valid Name" });
+    
 
     if (!validator.isValidName(fullName)) {
       return res
@@ -60,40 +52,26 @@ const createCollege = async (req, res) => {
   }
 };
 
-//_________________________  post api: Create  ________________________________
-
+//<-------------This API used from get College data---------------->//
 const collegeDetails = async (req, res) => {
   try {
     const data = req.query;
     const { collegeName } = data;
 
-    if (Object.keys(data) == 0) {
-      return res
-        .status(400)
-        .send({ status: false, msg: "Please Provide a College Name" });
-    }
+    if (Object.keys(data).length == 0) return res.status(400).send({ status: false, msg: "Please Provide a College Name" });
+    
 
-    let findCollege = await collegeModel
-      .findOne({ name: collegeName, isDeleted: false })
-      .select({ _id: 1, name: 1, logoLink: 1, fullName: 1 });
+    let findCollege = await collegeModel.findOne({ name: collegeName, isDeleted: false }).select({ _id: 1, name: 1, logoLink: 1, fullName: 1 });
 
-    if (!findCollege) {
-      return res
-        .status(400)
-        .send({ status: false, msg: "No college with this name exists" });
-    }
+    if (!findCollege) return res.status(400).send({ status: false, msg: "No college with this name exists" });
+    
 
     let collegeId = findCollege._id;
 
-    let candidates = await internModel
-      .find({ collegeId: collegeId, isDeleted: false })
-      .select({ name: 1, email: 1, mobile: 1 });
-    if (!candidates) {
-      return res.status(400).send({
-        status: false,
-        msg: "no students from this college has applied yet",
-      });
-    }
+    let candidates = await internModel.find({ collegeId: collegeId, isDeleted: false }).select({ name: 1, email: 1, mobile: 1 });
+    
+    if (!candidates) return res.status(400).send({status: false,msg: "no students from this college has applied yet",});
+    
 
     let details = {
       name: findCollege.name,
@@ -101,14 +79,11 @@ const collegeDetails = async (req, res) => {
       logoLink: findCollege.logoLink,
       interns: candidates,
     };
-
+  
     return res.status(200).send({ status: true, data: details });
 
-  } catch (error) {
-    return res.status(500).send({ status: false, error: error.message });
-  }
+  } catch (error) {return res.status(500).send({ status: false, error: error.message });}
 };
 
-//_________________________  Export: Module  ________________________________
-
+//<----------------------Export: Module---------------------------->//
 module.exports = { createCollege, collegeDetails };

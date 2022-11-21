@@ -12,7 +12,7 @@ const isValidName=function(name){
   //__________________________ Validations : Mobile No ___________________________________________
 
 const isValidMobileNo=function(mobile){
-    const regexMob=/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[6789]\d{9}$/g;
+    const regexMob=/[0-9]{10,10}/;
     return regexMob.test(mobile);
 }
 

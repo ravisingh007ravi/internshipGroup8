@@ -11,7 +11,7 @@ const collegeSchema = new mongoose.Schema(
     fullName: {
       type: String,
       required: true,
-      trim:true
+      trim: true
     },
     logoLink: {
       type: String,
@@ -25,4 +25,4 @@ const collegeSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = new mongoose.model("College",collegeSchema);
+module.exports = new mongoose.model("College", collegeSchema);

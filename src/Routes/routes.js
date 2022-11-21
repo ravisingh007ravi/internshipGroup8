@@ -1,20 +1,17 @@
-//_________________________  Imorting : Packages ________________________________
-
+//<----------------------Importing : Packages---------------------->//
 const express = require('express');
 const router = express.Router();
 
-//_________________________  Require: Modules  ________________________________
+//<----------------------Require: Modules------------------------>//
+const { createCollege, collegeDetails } = require("../Controllers/collegeController.js");
+const { createIntern } = require("../Controllers/internController.js");
 
-const { createCollege, collegeDetails } = require("../Controllers/collegeController.js")
-const { createIntern } = require("../Controllers/internController.js")
-
-//_________________________  post api: Create  ________________________________
-
+//<-------------This API used for Create Colleges----------------->//
 router.post("/functionup/colleges", createCollege)
-//_________________________  post api: Create  ________________________________
+//<-------------This API used for Create Internship---------------->//
 router.post("/functionup/interns", createIntern)
-// //_________________________  get api: Fetch  ________________________________
+//<-------------This API used from get College data---------------->//
 router.get("/functionup/collegeDetails", collegeDetails)
 
-//_________________________  Export: Route  ________________________________
+//<---------------------Export Route Module------------------------>//
 module.exports = router;
