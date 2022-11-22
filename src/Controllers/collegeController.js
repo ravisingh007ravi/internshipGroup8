@@ -10,7 +10,7 @@ const createCollege = async (req, res) => {
     const data = req.body;
     const { name, fullName, logoLink } = data;
 
-    if (Object.keys(data).length == 0) return res.status(400).send({ status: false, msg: "Please Provide Some Data" });
+    if (Object.keys(data).length == 0) return res.status(404).send({ status: false, msg: "Please Provide Some Data" });
 
     if (!validator.isValidName(name)) return res.status(404).send({ status: false, msg: "Please Provide a Valid Name" });
 
@@ -38,17 +38,17 @@ const collegeDetails = async (req, res) => {
     const data = req.query;
     const { collegeName } = data;
 
-    if (Object.keys(data).length == 0) return res.status(400).send({ status: false, msg: "Please Provide a College Name" });
+    if (Object.keys(data).length == 0) return res.status(404).send({ status: false, msg: "Please Provide a College Name" });
 
     let findCollege = await collegeModel.findOne({ name: collegeName, isDeleted: false }).select({ _id: 1, name: 1, logoLink: 1, fullName: 1 });
 
-    if (!findCollege) return res.status(400).send({ status: false, msg: "No college with this name exists" });
+    if (!findCollege) return res.status(404).send({ status: false, msg: "No college with this name exists" });
 
     let collegeId = findCollege._id;
 
     let candidates = await internModel.find({ collegeId: collegeId, isDeleted: false }).select({ name: 1, email: 1, mobile: 1 });
 
-    if (!candidates) return res.status(400).send({ status: false, msg: "no students from this college has applied yet", });
+    if (!candidates) return res.status(404).send({ status: false, msg: "no students from this college has applied yet", });
 
     let details = {
       name: findCollege.name,

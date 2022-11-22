@@ -9,9 +9,9 @@ const createIntern = async (req, res) => {
     const data = req.body;
     const { name, mobile, email, collegeName } = data;
 
-    if (Object.keys(data).length == 0) return res.status(400).send({ status: false, msg: "Please Provide Some Data" });
+    if (Object.keys(data).length == 0) return res.status(404).send({ status: false, msg: "Please Provide Some Data" });
 
-    if (!validator.isValidName(name)) return res.status(400).send({ status: false, msg: "Please Provide a Name" });
+    if (!validator.isValidName(name)) return res.status(404).send({ status: false, msg: "Please Provide a Name" });
 
     if (!validator.isValidMobileNo(mobile)) return res.status(404).send({ status: false, msg: "Please Provide a Valid Mobile No" });
 
