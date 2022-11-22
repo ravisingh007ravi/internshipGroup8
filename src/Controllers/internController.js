@@ -15,6 +15,9 @@ const createIntern = async (req, res) => {
 
     if (!validator.isValidMobileNo(mobile)) return res.status(404).send({ status: false, msg: "Please Provide a Valid Mobile No" });
 
+    isEmailAlreadyUse = await internModel.findOne({ email });
+    if (isEmailAlreadyUse) return res.status(400).send({status: false,msg: "this Email is already registered"});
+
     isMobileAlreadyUse = await internModel.findOne({ mobile });
     if (isMobileAlreadyUse) return res.status(400).send({ status: false, msg: "this Mobile No is already registered", });
 

@@ -3,13 +3,13 @@ const mongoose=require('mongoose');
 
 //<--------------------------Validations : Name-------------------------->//
 const isValidName=function(name){
-    const regexName=/^[a-zA-Z]+$/;;
+    const regexName=/^[a-zA-Z ]+$/;;
     return regexName.test(name)
 }
 
 //<--------------------------Validations : Mobile No-------------------------->//
 const isValidMobileNo=function(mobile){
-    const regexMob=/^[0-9]{10}+$/;
+    const regexMob=/^[0-9]{10}$/;
     return regexMob.test(mobile);
 }
 
