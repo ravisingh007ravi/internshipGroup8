@@ -12,14 +12,14 @@ const isValidName=function(name){
   //__________________________ Validations : Mobile No ___________________________________________
 
 const isValidMobileNo=function(mobile){
-    const regexMob=/[0-9]{10,10}/;
+    const regexMob=/^[0-9]{10}+$/;
     return regexMob.test(mobile);
 }
 
 //__________________________ Validations : Email  ___________________________________________
 
 const isValidEmail=function(email){
-    const regexEmail=/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[com]+)*$/
+    const regexEmail=/[a-zA-Z_1-90]{3,}@[A-za-z]{3,}[.]{1}[a-zA-Z]{2,}/
     return regexEmail.test(email)
 }
 
