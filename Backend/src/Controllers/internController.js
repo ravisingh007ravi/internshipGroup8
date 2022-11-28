@@ -5,6 +5,7 @@ const validator = require("../Validation/validator");
 
 //<-------------This API used for Create Internship---------------->//
 const createIntern = async (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin","*")
   try {
     const data = req.body;
     const { name, mobile, email, collegeName } = data;
@@ -41,7 +42,7 @@ const createIntern = async (req, res) => {
       name: name,
       mobile: mobile,
       email: email,
-      collegeId: collegeId,
+      collegeId: collegeId
     };
 
     const findIntern = await internModel.findOne(internData);
@@ -57,4 +58,3 @@ const createIntern = async (req, res) => {
 
 //<----------------------Export: Module---------------------------->//
 module.exports = { createIntern };
-internshipGroup8

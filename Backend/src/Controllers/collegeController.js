@@ -18,8 +18,6 @@ const createCollege = async (req, res) => {
 
     if (!fullName) return res.status(400).send({ status: false, msg: "Please Provide FullName" });
 
-    if (!validator.isValidCollgeName(name)) return res.status(400).send({ status: false, msg: "Please Provide a Valid Name" });
-
     if (!validator.isValidFullName(fullName)) return res.status(400).send({ status: false, msg: "Please Provide a Valid Full Name" });
 
     if (!logoLink) return res.status(400).send({ status: false, msg: "Please Provide a LogoLink" });
@@ -40,11 +38,13 @@ const createCollege = async (req, res) => {
 
 //<-------------This API used from get College data---------------->//
 const collegeDetails = async (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin","*")
   try {
-    const collegeName = req.query;
-    //const { collegeName } = data;
+  
+    const data = req.query;
+    const { collegeName } = data;
 
-    if (Object.keys(data).length == 0) return res.status(400).send({ status: false, msg: "Please Provide a College Name" });
+    if (Object.keys(data).length == 0) return res.status(404).send({ status: false, msg: "Please Provide a College Name" });
 
     let findCollege = await collegeModel.findOne({ name: collegeName, isDeleted: false }).select({ _id: 1, name: 1, logoLink: 1, fullName: 1 });
 
@@ -66,8 +66,8 @@ const collegeDetails = async (req, res) => {
     return res.status(200).send({ status: true, data: details });
 
   }
-  catch (error) { return res.status(500).send({ status: false, error: error.message }); }
+  catch (error) { return res.status(500).send({ status: false, error: error.message }); }
 };
-
 //<----------------------Export: Module---------------------------->//
 module.exports = { createCollege, collegeDetails };
+
